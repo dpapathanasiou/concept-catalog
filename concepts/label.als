@@ -44,3 +44,13 @@ fun find (l: Label): set Item {
 }
 
 /* operational principles */
+
+// after affix(i, l) and no detach(i, l), i in find(l)
+
+assert found_after_affix {
+  always (all i : LabeledItems.*item, l: Label | affix[i, l] implies i in find[l] until detach[i, l])
+}
+
+check found_after_affix
+
+// if no affix(i, l), or no detach(i, l), i not in find(l)
