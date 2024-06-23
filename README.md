@@ -4,6 +4,8 @@ This is a proof-of-concept in defining a *catalog of software concepts*, as desc
 
 ## Definition
 
+Software concepts (hereafter just *concepts*) all have these principles in common:
+
 - Concepts have purposes
 - Concepts are behavioral
 - Concepts have rich state
