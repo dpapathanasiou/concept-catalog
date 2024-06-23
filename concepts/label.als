@@ -12,35 +12,31 @@ module concepts/label[Item]
 sig Label {}
 
 sig LabeledItems {
-  item: Item,
-  labels: set Label
+  items: Item -> set Label
 }
 
 /* actions */
 
 pred item_has_label [i: Item, l: Label] {
-  (i = LabeledItems.item) and (l in LabeledItems.*labels)
+  l in LabeledItems.items[i]
 }
 
 pred affix [i: Item, l: Label] {
   not item_has_label[i, l]
-  LabeledItems'.item = LabeledItems.item
-  LabeledItems'.labels = LabeledItems.labels + l
+  LabeledItems'.items[i] = LabeledItems.items[i] + l
 }
 
 pred detach [i: Item, l: Label] {
   item_has_label[i, l]
-  LabeledItems'.item = LabeledItems.item
-  LabeledItems'.labels = LabeledItems.labels - l
+  LabeledItems'.items[i] = LabeledItems.items[i] - l
 }
 
 pred clear [i: Item] {
-  LabeledItems'.item = LabeledItems.item
-  LabeledItems'.labels = Label {}
+  LabeledItems'.items[i] = Label {}
 }
 
 fun find (l: Label): set Item {
-  { items: LabeledItems.*labels | l in items.labels }
+  { i: Item | some LabeledItems.items[i] and l in LabeledItems.items[i] }
 }
 
 /* operational principles */
@@ -48,7 +44,7 @@ fun find (l: Label): set Item {
 // after affix(i, l) and no detach(i, l), i in find(l)
 
 assert found_after_affix {
-  always (all i : LabeledItems.*item, l: Label | affix[i, l] implies i in find[l] until detach[i, l])
+  always (all i: Item, l: Label | affix[i, l] implies i in find[l] until detach[i, l])
 }
 
 check found_after_affix
