@@ -10,7 +10,7 @@ module applications/todo_label
 open concepts/todo
 open concepts/label[Task]
 
-sig Pending in Label {}
+var sig Pending in Label {}
 
 /* synchronized actions, or application API */
 

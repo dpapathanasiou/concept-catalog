@@ -9,10 +9,10 @@ module concepts/label[Item]
 
 /* state */
 
-sig Label {}
+var sig Label {}
 
-sig LabeledItems {
-  items: Item -> set Label
+var sig LabeledItems {
+  var items: Item -> set Label
 }
 
 /* actions */
@@ -23,16 +23,16 @@ pred item_has_label [i: Item, l: Label] {
 
 pred affix [i: Item, l: Label] {
   not item_has_label[i, l]
-  LabeledItems'.items[i] = LabeledItems.items[i] + l
+  LabeledItems.items[i] = LabeledItems.items[i] + l
 }
 
 pred detach [i: Item, l: Label] {
   item_has_label[i, l]
-  LabeledItems'.items[i] = LabeledItems.items[i] - l
+  LabeledItems.items[i] = LabeledItems.items[i] - l
 }
 
 pred clear [i: Item] {
-  LabeledItems'.items[i] = Label {}
+  LabeledItems.items[i] = Label {}
 }
 
 fun find (l: Label): set Item {
