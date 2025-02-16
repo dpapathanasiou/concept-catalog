@@ -32,7 +32,7 @@ pred detach [i: Item, l: Label] {
 }
 
 pred clear [i: Item] {
-  LabeledItems.items[i] = Label {}
+  all l: LabeledItems.items[i] | detach[i, l]
 }
 
 fun find (l: Label): set Item {
