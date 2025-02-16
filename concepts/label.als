@@ -52,3 +52,9 @@ assert not_found_after_detach {
 }
 
 check not_found_after_detach
+
+assert not_found_after_clear {
+  always (all i: Item | clear[i] implies LabeledItems.items[i] = none)
+}
+
+check not_found_after_clear
